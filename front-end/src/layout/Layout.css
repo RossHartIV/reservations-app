@@ -2,3 +2,9 @@
   background-color: #393a44;
   min-width: 200px;
 }
+
+@media all and (min-width: 800px) {
+  .side-bar {
+    min-height: 100vh;
+  }
+}

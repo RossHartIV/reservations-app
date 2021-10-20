@@ -1,3 +1,4 @@
+import { trackPromise } from "react-promise-tracker";
 /**
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
@@ -63,7 +64,44 @@ export async function listReservations(params, signal) {
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value.toString())
   );
-  return await fetchJson(url, { headers, signal }, [])
-    .then(formatReservationDate)
-    .then(formatReservationTime);
+  return trackPromise(
+    fetchJson(url, { headers, signal }, [])
+      .then(formatReservationDate)
+      .then(formatReservationTime)
+  )
+}
+
+export async function createReservation(reservationData, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations`);
+  return fetchJson(url, {method: "POST", body: JSON.stringify({ data: reservationData }),signal, headers}, {});
+}
+
+export async function readReservation(reservation_id, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
+  return await fetchJson(url, { headers, signal }, {});
+}
+
+export async function updateReservation(reservation_id, reservation, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
+  return fetchJson(url, {method: "PUT", body: JSON.stringify({ data: reservation }), signal, headers}, {});
+}
+
+export async function createTable(table, signal) {
+  const url = new URL(`${API_BASE_URL}/tables`);
+  return fetchJson(url, {method: "POST", body: JSON.stringify({ data: table }), signal, headers}, {});
+}
+
+export async function listTables(signal) {
+  const url = new URL(`${API_BASE_URL}/tables`);
+  return trackPromise(fetchJson(url, { headers, signal }, []));
+}
+
+export async function updateStatus(reservation_id, status, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}/status`);
+  return fetchJson(url, { method: "PUT", body: JSON.stringify({ data: { status } }), signal, headers }, {});
+}
+
+export async function deleteReservation(table_id, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
+  return fetchJson(url, { method: "DELETE", signal, headers }, {});
 }
