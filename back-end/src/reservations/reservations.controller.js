@@ -1,11 +1,23 @@
 const service = require('./reservations.service')
 const asyncErrorBoundary = require('../errors/ayncErrorBoundary')
 
-// async function list(req, res) {
-//   res.json({
-//     data: [],
-//   });
-// }
+async function list(req, res) {
+  const { date = null, mobile_number = null } = req.query;
+  // console.log(date)
+  if (date) {
+    const allReservations = await service.list({ reservation_date: date });
+    const data = allReservations.filter(
+      (reservation) =>
+        reservation.status !== "finished" && reservation.status !== "cancelled"
+    );
+
+    res.json({ data });
+  }  else if (mobile_number) {
+    const data = await service.search(mobile_number);
+
+    res.json({ data });
+  }
+}
 
 async function create(req, res) {
   const data = await service.create(req.body.data);
@@ -75,7 +87,10 @@ function validateParams(req, res, next) {
   // all dates must match the format of the JS date function
   const open = new Date(`${data.reservation_date}T10:30`);
   const close = new Date(`${data.reservation_date}T21:30`);
-  const reservationDate = new Date(data.reservation_date)
+  // const reservationDate = new Date(data.reservation_date)
+  const dateParts = data.reservation_date.split('-');
+
+  const reservationDate = new Date(Date.UTC(...dateParts.map((elem, i) => i === 1 ? parseInt(elem)-1:parseInt(elem))))
   const reservationTime = new Date(`${data.reservation_date}T${data.reservation_time}`)
 
   // date must be in the correct form
@@ -89,9 +104,10 @@ function validateParams(req, res, next) {
   };
   
   // date must not be on a Tuesday
-  if (reservationDate.getDay() === 2) {
-    return next({ status: 400, message: "reservation_date must not fall on a Tuesday" });
+  if (reservationDate.getUTCDay() === 2) {
+    return next({ status: 400, message: "reservation_date must not fall on a Tuesday, restaurant is closed" });
   };
+  
 
   // reservation time must be between 10:30am and 9:30pm
   if (reservationTime < open || reservationTime > close) {
@@ -106,7 +122,7 @@ function validateParams(req, res, next) {
   next();
 }
 
-function validateQuery(req, next) {
+function validateQuery(req, res, next) {
   const { query } = req;
 
   for (const property in query) {
@@ -162,7 +178,7 @@ function validateStatus(req, res, next) {
 }
 
 module.exports = {
-  // list,
+  list: [asyncErrorBoundary(list)],
   create: [validateParams, asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(validateId), read],
   update: [validateParams, asyncErrorBoundary(validateId), asyncErrorBoundary(update)]
