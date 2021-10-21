@@ -7,6 +7,8 @@ import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import CreateTable from "../tables/CreateTable";
+import Search from "../search/Search";
+import Seat from "../reservations/Seat";
 
 
 /**
@@ -33,11 +35,17 @@ function Routes() {
       <Route path="/reservations/:reservationId/edit">
         <EditReservation />
       </Route>
+      <Route path="/reservations/:reservationId/seat">
+        <Seat />
+      </Route>
       <Route path="/reservations/new">
         <CreateReservation />
       </Route>
       <Route path="/tables/new">
         <CreateTable />
+      </Route>
+      <Route path="/search">
+        <Search />
       </Route>
       <Route>
         <NotFound />

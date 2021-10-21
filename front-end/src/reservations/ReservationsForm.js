@@ -30,7 +30,7 @@ export default function ReservationForm({defaultForm, submitType, newOrEdit}) {
             ]);
         };
 
-        const open = new Date(`${formData.reservation_date}T10:30`); // Date-time with target date and startTime
+        const open = new Date(`${formData.reservation_date}T10:30`);
         const close = new Date(`${formData.reservation_date}T21:30`);
         if (reservationDate < open) {
             result = false;
@@ -63,6 +63,7 @@ export default function ReservationForm({defaultForm, submitType, newOrEdit}) {
         formData.people = Number(formData.people);
 
         if (validForm()) {
+            console.log(formData)
             submitType(formData)
                 .then(() => history.push(`/dashboard?date=${formData.reservation_date}`))
                 .catch((error) => setFormErrors((currentErrors) => [...currentErrors, error]));

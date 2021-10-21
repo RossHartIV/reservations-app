@@ -38,10 +38,7 @@ export default function CreateTable() {
     return (
         <div className="d-flex flex-column mb-3">
         <h1 className="h1 align-self-center">Create a New Table</h1>
-        <form
-          onSubmit={handleSubmit}
-          className="align-self-center col-10 col-xl-5"
-        >
+        <form onSubmit={handleSubmit} className="align-self-center col-10 col-xl-5" >
           {showErrors}
           <fieldset>
             <div className="form-group my-2">

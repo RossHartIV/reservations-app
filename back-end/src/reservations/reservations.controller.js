@@ -42,6 +42,12 @@ async function update(req, res) {
   const data = await service.update(input.reservation_id, updatedReservation)
 
   res.json({ data });
+};
+
+async function changeStatus(req, res) {
+  const { status, reservation } = res.locals;
+  const data = await service.changeStatus(reservation.reservation_id, status);
+  res.status(200).json({ data });
 }
 
 
@@ -55,9 +61,9 @@ function validateParams(req, res, next) {
   if (!data) next({ status: 400, message: "No parameters given" });
 
   // must have status of either 'booked' or 'cancelled'
-  // if (data.status && data.status !== "booked" && data.status !== "cancelled") {
-  //   return next({ status: 400, message: `No such status: ${data.status}` });
-  // }
+  if (data.status && data.status !== "booked" && data.status !== "cancelled") {
+    return next({ status: 400, message: `No such status: ${data.status}` });
+  }
 
   const input = Object.keys(data);
 
@@ -125,6 +131,9 @@ function validateParams(req, res, next) {
 function validateQuery(req, res, next) {
   const { query } = req;
 
+  if (!query.date && !query.mobile_number) {
+    return next({ status: 400, message: `query must contain either 'date' or 'mobile_number'`})
+  }
   for (const property in query) {
     if (property !== 'mobile_number' && property!=='date') {
       return next({ status: 400, message: `property '${property}' is invalid - query must be either 'date' or 'mobile_number'` });
@@ -174,12 +183,14 @@ function validateStatus(req, res, next) {
   };
 
   res.locals.status = status;
+
   next();
 }
 
 module.exports = {
-  list: [asyncErrorBoundary(list)],
+  list: [validateQuery, asyncErrorBoundary(list)],
   create: [validateParams, asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(validateId), read],
-  update: [validateParams, asyncErrorBoundary(validateId), asyncErrorBoundary(update)]
+  update: [validateParams, asyncErrorBoundary(validateId), asyncErrorBoundary(update)],
+  changeStatus: [asyncErrorBoundary(validateId), validateStatus, asyncErrorBoundary(changeStatus)]
 };

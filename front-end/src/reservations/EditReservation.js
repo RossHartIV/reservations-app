@@ -5,7 +5,7 @@ import ReservationForm from "./ReservationsForm";
 import { updateReservation, readReservation } from "../utils/api";
 
 export default function EditReservation() {
-    const { reservation_id } = useParams();
+    const { reservationId } = useParams();
 
     const [defaultForm, setDefaultForm] = useState({
         first_name: '',
@@ -18,22 +18,20 @@ export default function EditReservation() {
 
     //set the default data whenever you have a change in reservation_id
     useEffect(() => {
-        readReservation(reservation_id)
-            // the date from the readReservation Function is not in the correct form, we fix that here
+        readReservation(reservationId)
+            // if the date from the readReservation Function is not in the correct form, we fix it here
             .then((res) => {
                 res.reservation_date = formatAsDate(res.reservation_date);
                 return res
             })
             .then(setDefaultForm)
-    }, [reservation_id]);
+    }, [reservationId]);
 
     const update = (reservationData) => {
-        updateReservation(reservation_id, reservationData)
+        return updateReservation(reservationId, reservationData)
     }
 
-    const Edit = 'Edit'
-
     return (
-        <ReservationForm defaultForm={defaultForm} submitType={update} newOrEdit={Edit}/>
+        <ReservationForm defaultForm={defaultForm} submitType={update} newOrEdit={'Edit'}/>
     )
 }

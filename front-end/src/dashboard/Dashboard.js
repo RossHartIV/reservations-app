@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ChangeDate from './ChangeDate'
-import { listReservations, listTables, updateStatus, deleteReservation } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import ListReservations from "./ListReservations";
+import ListTables from "./ListTables";
 
 /**
  * Defines the dashboard page.
@@ -16,40 +18,34 @@ export default function Dashboard({ date }) {
   const [tablesError, setTablesError] = useState(null);
 
   function loadReservations() {
-    const abortController = new AbortController();
-    setReservationsError(null);
-    setReservations([]);
-    listReservations({ date }, abortController.signal)
+    return listReservations({ date })
       .then(setReservations)
       .catch(setReservationsError);
-    return () => abortController.abort();
   }
+
   function loadTables() {
-    const abortController = new AbortController();
-    setTablesError(null);
-    setTables([]);
-    listTables(abortController.signal)
+    return listTables()
       .then(setTables)
-      .catch(setTablesError);
-    return () => abortController.abort();
+      .catch((res) => {
+        setTablesError(res)
+      });
   }
 
   useEffect(loadReservations, [date]);
-  // useEffect(loadTables);
+  useEffect(loadTables, []);
 
-  // function loadDashboard() {
-  //   loadReservations();
-  //   loadTables();
-  // }
+  const loadDashboard = () => {
+    return loadReservations()
+      .then(loadTables);
+  }
 
   return (
-    <main>
       <div className="d-flex flex-column mb-3">
         <h1 className="h1 align-self-center">Dashboard</h1>
         <div className="container-lg d-flex flex-column align-items-center justify-content-center px-0">
           <div className="col-12">
-            {/* <ErrorAlert error={reservationsError} />
-            <ErrorAlert error={tablesError} /> */}
+            <ErrorAlert error={reservationsError} />
+            <ErrorAlert error={tablesError} />
           </div>
           <h4 className="h4">Reservations for {date}</h4>
           <div>
@@ -57,24 +53,15 @@ export default function Dashboard({ date }) {
             <ChangeDate displayedDate={date} buttonType="Today" />
             <ChangeDate displayedDate={date} buttonType="Next" />
           </div>
-          {/* <div className="col-11">
-            <DisplayTable
-              data={reservations}
-              objCols={reservationsCols}
-              buttonFunction={cancelReservation}
-            />
+          <div className="col-11">
+            <ListReservations reservations={reservations} loadDashboard={loadDashboard}/>
           </div>
-          <h4 className="h4 mt-5">Tables in the Restaurant</h4>
+          <h4 className="h4 mt-5">Restaurant Tables</h4>
           <div className="col-12">
-            <DisplayTable
-              data={tables}
-              objCols={tableCols}
-              buttonFunction={finishTable}
-            />
-          </div> */}
+            <ListTables tables={tables} loadDashboard={loadDashboard}/>
+          </div>
         </div>
       </div>
-    </main>
   );
 }
 

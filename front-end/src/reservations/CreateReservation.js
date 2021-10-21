@@ -16,9 +16,7 @@ export default function CreateReservation() {
         return createReservation(reservationData);
     };
 
-    const New = 'New'
-
     return (
-        <ReservationForm defaultForm={emptyForm} submitType={creation} newOrEdit={New}/>
+        <ReservationForm defaultForm={emptyForm} submitType={creation} newOrEdit={'New'}/>
     )
 }
