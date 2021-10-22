@@ -76,6 +76,8 @@ Tables Endpoint:
 
 
 ## Dashboard `/dashboard?date=2021-10-23`
+![Dashboard Screenshot](https://raw.githubusercontent.com/RossHartIV/reservations-app/main/screenshots/Dashboard.png)
+
 > Displays date, allows user to jump to today (Today), or move one day ahead (Next) or prior (Previous).
 > Displays the reservations for the queried date (here 2021-10-23), and the tables that exist in the restaurant. If either of these are missing it provides a link to add reservations or tables respectively.
 > Seat and Edit buttons will direct to their respective id's `/seat` or `/edit` pages
@@ -83,18 +85,28 @@ Tables Endpoint:
 > Finish table buttons allow (only) occupied tables to be freed
 
 ## Create Reservation `/reservations/new`
+![Create Reservation Screenshot](https://raw.githubusercontent.com/RossHartIV/reservations-app/main/screenshots/CreateReservation.png)
+
 > Displays a form for required information. Pressing Submit will submit a post request with the provided data to the server, pressing Cancel will return user to previous page.
 
 ## Edit Reservation `/reservations/6/edit`
+![Edit Reservation Screenshot](https://raw.githubusercontent.com/RossHartIV/reservations-app/main/screenshots/EditReservation.png)
+
 > Displays a form for required information, defaulting with the associated reservation id (6)'s information. Pressing Submit will submit a put request with the provided data to the server, pressing Cancel will return user to previous page.
 
 ## Seat Reservation `/reservations/6/seat`
+![Seat Reservation Screenshot](https://raw.githubusercontent.com/RossHartIV/reservations-app/main/screenshots/SeatReservation.png)
+
 > Displays a selection form for the tables in the restaurant and the number of people (2) in the reservation's party. Pressing Submit will submit a put request with the selected table's `table_id` to the server, pressing Cancel will return user to previous page. 
 
 ## Create Table `/tables/new`
+![Create Table Screenshot](https://raw.githubusercontent.com/RossHartIV/reservations-app/main/screenshots/CreateTable.png)
+
 > Displays a form for required information. Pressing Submit will submit a post request with the provided data to the server, pressing Cancel will return user to previous page.
 
 ## Search `/search`
+![Search Screenshot](https://raw.githubusercontent.com/RossHartIV/reservations-app/main/screenshots/Search.png)
+
 > Displays a for a mobile number. Pressing Find will display all reservations associated with the `mobile_number` given in the form.
 
 
