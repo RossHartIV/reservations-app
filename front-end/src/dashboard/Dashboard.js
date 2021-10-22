@@ -41,23 +41,23 @@ export default function Dashboard({ date }) {
 
   return (
       <div className="d-flex flex-column mb-3">
-        <h1 className="h1 align-self-center">Dashboard</h1>
-        <div className="container-lg d-flex flex-column align-items-center justify-content-center px-0">
+        <h1 className="align-self-center">Dashboard</h1>
+        <div className="d-flex flex-column align-items-center justify-content-center">
           <div className="col-12">
             <ErrorAlert error={reservationsError} />
             <ErrorAlert error={tablesError} />
           </div>
-          <h4 className="h4">Reservations for {date}</h4>
-          <div>
+          <div className="d-flex flex-row col-4 justify-content-around">
             <ChangeDate displayedDate={date} buttonType="Previous"/>
             <ChangeDate displayedDate={date} buttonType="Today" />
             <ChangeDate displayedDate={date} buttonType="Next" />
           </div>
-          <div className="col-11">
+          <h5>Reservations for {date}</h5>
+          <div className="col-12">
             <ListReservations reservations={reservations} loadDashboard={loadDashboard}/>
           </div>
-          <h4 className="h4 mt-5">Restaurant Tables</h4>
-          <div className="col-12">
+          <h5>Tables</h5>
+          <div className="col-10">
             <ListTables tables={tables} loadDashboard={loadDashboard}/>
           </div>
         </div>

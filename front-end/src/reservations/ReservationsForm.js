@@ -63,7 +63,6 @@ export default function ReservationForm({defaultForm, submitType, newOrEdit}) {
         formData.people = Number(formData.people);
 
         if (validForm()) {
-            console.log(formData)
             submitType(formData)
                 .then(() => history.push(`/dashboard?date=${formData.reservation_date}`))
                 .catch((error) => setFormErrors((currentErrors) => [...currentErrors, error]));
@@ -75,113 +74,57 @@ export default function ReservationForm({defaultForm, submitType, newOrEdit}) {
     };
 
     return (
-        <div className="d-flex flex-column mb-3">
-            {newOrEdit === 'New' ? <h1 className="h1 align-self-center">New Reservation</h1>:<h1 className="h1 align-self-center">Edit Reservation</h1>}
-            <form className="align-self-center col-10 col-xl-5" onSubmit={handleSubmit}>
-            {showErrors}
-                <fieldset className="d-flex flex-column ">
-                    <div className="form-group my-2">
-                    <label htmlFor="first_name">First Name</label>
-                    <input
-                        id="first_name"
-                        type="text"
-                        name="first_name"
-                        placeholder="Enter your first name"
-                        title="Enter your first name"
-                        className="form-control my-2"
-                        value={formData.first_name}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
+        <div>
+            <div className="d-flex flex-column mb-3">
+                {newOrEdit === 'New' ? <h1>Create a New Reservation</h1>:<h1>Edit Reservation</h1>}
+            </div>
+            <div className="flex-column mb-3">
+            
+                <form className=" col-12 align-self-center" onSubmit={handleSubmit}>
+                    {showErrors}
+                    <fieldset className="align-center">
+                        <div className="mb-3">
+                            <label htmlFor="first_name">First Name</label>
+                            <input id="first_name" type="text" name="first_name" placeholder="Jane/John" className="form-control" value={formData.first_name} onChange={handleChange} required/>
+                        </div>
 
-                    <div className="form-group my-2">
-                    <label htmlFor="last_name">Last Name</label>
-                    <input
-                        id="last_name"
-                        type="text"
-                        name="last_name"
-                        placeholder="Enter your last name"
-                        title="Enter your last name"
-                        className="form-control my-2"
-                        value={formData.last_name}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="last_name">Last Name</label>
+                            <input id="last_name" type="text" name="last_name" placeholder="Doe" className="form-control" value={formData.last_name} onChange={handleChange} required/>
+                        </div>
 
-                    <div className="form-group my-2">
-                    <label htmlFor="mobile_number">Mobile number</label>
-                    <input
-                        id="mobile_number"
-                        type="text"
-                        name="mobile_number"
-                        placeholder="Enter your mobile phone number"
-                        title="Enter your mobile phone number"
-                        className="form-control my-2"
-                        value={formData.mobile_number}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="mobile_number">Phone number</label>
+                            <input id="mobile_number" type="text" name="mobile_number" placeholder="xxx-xxx-xxxx" className="form-control" value={formData.mobile_number} onChange={handleChange} required/>
+                        </div>
 
-                    <div className="form-group my-2">
-                    <label htmlFor="reservation_date">Date of Reservation</label>
-                    <input
-                        id="reservation_date"
-                        type="date"
-                        name="reservation_date"
-                        title="Please select the date you wish to reserve"
-                        className="form-control my-2"
-                        value={formData.reservation_date}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="reservation_date">Reservation Date</label>
+                            <input id="reservation_date" type="date" name="reservation_date" className="form-control" value={formData.reservation_date} onChange={handleChange} required/>
+                        </div>
 
-                    <div className="form-group my-2">
-                    <label htmlFor="reservation_time">Time of Reservation</label>
-                    <input
-                        id="reservation_time"
-                        type="time"
-                        name="reservation_time"
-                        title="Please select the time you wish to reserve"
-                        className="form-control my-2"
-                        value={formData.reservation_time}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="reservation_time">Reservation Time</label>
+                            <input id="reservation_time" type="time" name="reservation_time" className="form-control" value={formData.reservation_time} onChange={handleChange} required/>
+                        </div>
 
-                    <div className="form-group my-2">
-                    <label htmlFor="people">Size of Party</label>
-                    <input
-                        id="people"
-                        type="number"
-                        name="people"
-                        placeholder="Please enter the size of your party"
-                        title="Please enter the size of your party"
-                        className="form-control my-2"
-                        min="1"
-                        value={formData.people}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                    <button
-                        type="button"
-                        className="btn btn-secondary btn-lg col-5"
-                        onClick={handleCancel}
-                    >
-                        Cancel
-                    </button>
-                    <button type="submit" className="btn btn-primary btn-lg col-5">
-                        Submit
-                    </button>
-                    </div>
-                </fieldset>
-            </form>
-      </div>
+                        <div className="mb-3">
+                            <label htmlFor="people">Number of People in Party</label>
+                            <input id="people" type="number" name="people" placeholder="2" className="form-control " min="1" value={formData.people} onChange={handleChange} required />
+                        </div>
+
+                        <div className="justify-content-around d-flex">
+                            <button type="button" className="btn btn-secondary btn-lg" onClick={handleCancel}>
+                                Cancel
+                            </button>
+                            <button type="submit" className="btn btn-primary btn-lg ">
+                                Submit
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        
     )
 };

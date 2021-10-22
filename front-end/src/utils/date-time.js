@@ -40,6 +40,15 @@ export function formatAsTime(timeString) {
   return timeString.match(timeFormat)[0];
 }
 
+export function twelveHourTime(timeString) {
+  let time = timeString.match(timeFormat)[0].split(':')
+  let dayPart = 'am'
+  if (Number(time[0])/12>=1) {
+    dayPart = 'pm'
+  }
+  return time.map((e,i) => i===0 && Number(Number(e)%12) !==0 ? Number(Number(e)%12).toString():e).join(':')+dayPart;
+}
+
 /**
  * Today's date as YYYY-MM-DD.
  * @returns {*}

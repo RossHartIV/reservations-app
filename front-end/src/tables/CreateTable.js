@@ -36,56 +36,35 @@ export default function CreateTable() {
     };
 
     return (
+      <div>
         <div className="d-flex flex-column mb-3">
-        <h1 className="h1 align-self-center">Create a New Table</h1>
-        <form onSubmit={handleSubmit} className="align-self-center col-10 col-xl-5" >
-          {showErrors}
-          <fieldset>
-            <div className="form-group my-2">
-              <label htmlFor="table_name">Table Name</label>
-              <input
-                id="table_name"
-                type="text"
-                name="table_name"
-                placeholder="Please provide a name for the table"
-                title="Please provide a name for the table"
-                className="form-control my-2"
-                value={formData.table_name}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <h1>Create a New Table</h1>
+        </div>
+        <div className="flex-column mb-3">
+          <form onSubmit={handleSubmit} className="col-12 align-self-center" >
+            {showErrors}
+            <fieldset>
+              <div className="form-group">
+                <label htmlFor="table_name">Table Name</label>
+                <input id="table_name" type="text" name="table_name" placeholder="Table #1" className="form-control" value={formData.table_name} onChange={handleChange} required/>
+              </div>
 
-            <div className="form-group my-2">
-              <label htmlFor="capacity">Maximum Capacity</label>
-              <input
-                id="capacity"
-                type="number"
-                name="capacity"
-                placeholder="Please enter the maximum seating capacity for this table"
-                title="Please enter the maximum seating capacity for this table"
-                className="form-control my-2"
-                min="1"
-                value={formData.capacity}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="form-group">
+                <label htmlFor="capacity">Table Capacity</label>
+                <input id="capacity" type="number" name="capacity" className="form-control " min="1" value={formData.capacity} onChange={handleChange} required/>
+              </div>
 
-            <div className="d-flex justify-content-between">
-              <button
-                type="button"
-                className="btn btn-secondary btn-lg col-5"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="btn btn-primary btn-lg col-5">
-                Submit
-              </button>
-            </div>
-          </fieldset>
-        </form>
+              <div className="justify-content-around d-flex">
+                <button type="button" className="btn btn-secondary btn-lg" onClick={handleCancel}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-primary btn-lg">
+                  Submit
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
       </div>
     )
 }

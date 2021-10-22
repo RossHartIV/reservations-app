@@ -44,19 +44,23 @@ export default function Search() {
 
     return (
         <div className="d-flex mb-3 flex-column">
-          <h1 className="h1 align-self-center">Search for Reservations</h1>
+          <h1 className="align-self-center">Search for Reservations</h1>
           <div className="col-12">
             <ErrorAlert error={reservationsError} />
           </div>
           <form onSubmit={handleFind} className="align-self-center">
             <div className="col align-self-center">Enter a phone number</div>
-            <input name="mobile_number" id="mobile_number" placeholder="###-###-####" onChange={handleChange} required />
-            <button type="submit" className="btn btn-success px-3 mt-2">
-                Find
-            </button>
+            <div style={{display: 'flex',  justifyContent:'center',  height: '7vh'}}>
+                <input name="mobile_number" id="mobile_number" placeholder="###-###-####" onChange={handleChange} required />
+            </div>
+            <div style={{display: 'flex',  justifyContent:'center',  height: '7vh'}}>
+                <button type="submit" className="btn btn-primary px-3 mt-2">
+                    Find
+                </button>
+            </div>
           </form>
           <div className="align-self-center col-12 col-xl-10 mt-4">
-            <ListReservations reservations={reservations} loadReservations={searchReservations}/>
+            <ListReservations reservations={reservations} loadDashboard={searchReservations}/>
           </div>
         </div>
     )

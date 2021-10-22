@@ -68,7 +68,7 @@ export default function Seat() {
 
   return (
     <div className="d-flex flex-column mb-3">
-      <h1 className="h1 align-self-center">Seat a reservation</h1>
+      <h1 className="align-self-center">Seat a reservation</h1>
       <div className="container-lg d-flex flex-column align-items-center justify-content-center px-0">
         <div className="col-12">
           <ErrorAlert error={tablesError} />

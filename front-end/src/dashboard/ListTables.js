@@ -1,10 +1,9 @@
 import React from "react";
 import { finishTable } from "../utils/api";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 export default function ListTables({tables, loadDashboard}) {
-    const history = useHistory();
 
     const required = {
         table_name: "Table Name",

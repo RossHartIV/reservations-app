@@ -174,7 +174,7 @@ function validateStatus(req, res, next) {
 
   // status should only be 'booked', 'seated', 'finished', or 'cancelled'
   if ( status != "booked" && status !== "seated" && status !== "finished" && status !== "cancelled"){
-    return next({ status: 400, message: `${status} is not a valid status ` });
+    return next({ status: 400, message: `${status} is not a valid status, as the reservations is already ${reservation.status}` });
   };
 
   // only accept mutable statuses

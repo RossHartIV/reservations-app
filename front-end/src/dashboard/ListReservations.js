@@ -1,6 +1,7 @@
 import React from "react";
 import { SeatBtn, EditBtn, CancelBtn } from "../utils/buttons";
 import { Link } from "react-router-dom";
+import { twelveHourTime } from "../utils/date-time";
 
 export default function ListReservations({ reservations, loadDashboard }) {
     const required = {
@@ -18,17 +19,22 @@ export default function ListReservations({ reservations, loadDashboard }) {
                     if (key === "status"){
                         return (<td key={index} data-reservation-id-status={reservation.reservation_id}>{reservation.status}</td>)
                     }
+                    if (key === "reservation_time") {
+                        return (<td key={index}>{twelveHourTime(reservation.reservation_time)}</td>);
+                    }
                     return (<td key={index}>{reservation[key]}</td>);
                 });
             };
             return (
                 <tr key={i}>
                     <Row />
+                    {reservation.status === "booked" && 
                     <td>
-                        { reservation.status === "booked" &&<SeatBtn reservation_id={reservation.reservation_id} /> }
-                        { reservation.status === "booked" && <EditBtn reservation_id={reservation.reservation_id} /> }
-                        { (reservation.status !== "cancelled" && reservation.status !== "finished") && <CancelBtn reservation_id={reservation.reservation_id} status={reservation.reservation_status} loadReservations={loadDashboard} /> }
-                    </td>
+                        <SeatBtn reservation_id={reservation.reservation_id} />
+                        <EditBtn reservation_id={reservation.reservation_id} />
+                        <CancelBtn reservation_id={reservation.reservation_id} status={reservation.reservation_status} loadDashboard={loadDashboard} />
+                    </td>}
+                    
                 </tr>
             )
         })

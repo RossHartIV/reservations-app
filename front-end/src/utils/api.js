@@ -81,9 +81,7 @@ export async function readReservation(reservation_id, signal) {
 
 export async function updateReservation(reservation_id, reservationData, signal) {
   const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
-  let data = await fetchJson(url, {method: "PUT", body: JSON.stringify({ data: reservationData }), signal, headers}, {});
-  console.log(data)
-  return data
+  return await fetchJson(url, {method: "PUT", body: JSON.stringify({ data: reservationData }), signal, headers}, {});
 }
 
 export async function createTable(table, signal) {

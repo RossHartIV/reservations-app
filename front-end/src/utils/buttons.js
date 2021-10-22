@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { updateStatus } from "./api";
 
-export function CancelBtn({ reservation_id, status, loadReservations }) {
+export function CancelBtn({ reservation_id, status, loadDashboard }) {
   
 
   const handleCancel = (evt) => {
@@ -11,7 +11,7 @@ export function CancelBtn({ reservation_id, status, loadReservations }) {
       if (window.confirm( "Do you want to cancel this reservation? This cannot be undone.")) {
         updateStatus(reservation_id, "cancelled")
           .then(() => {
-            loadReservations();
+            loadDashboard();
             if (status === 'seated') {
               
             }
